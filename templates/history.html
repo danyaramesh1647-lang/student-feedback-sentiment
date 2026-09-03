@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Feedback History | Feedback Sentiment Analyzer{% endblock %}
+
+{% block content %}
+<section class="history-section">
+    <h1>Feedback History</h1>
+
+    <div class="stats-grid">
+        <div class="stat-box">
+            <span class="stat-number">{{ stats.total }}</span>
+            <span class="stat-label">Total Analyzed</span>
+        </div>
+        <div class="stat-box positive">
+            <span class="stat-number">{{ stats.positive }}</span>
+            <span class="stat-label">😊 Positive</span>
+        </div>
+        <div class="stat-box neutral">
+            <span class="stat-number">{{ stats.neutral }}</span>
+            <span class="stat-label">😐 Neutral</span>
+        </div>
+        <div class="stat-box negative">
+            <span class="stat-number">{{ stats.negative }}</span>
+            <span class="stat-label">😞 Negative</span>
+        </div>
+    </div>
+
+    {% if feedback_list %}
+        <div class="history-list">
+            {% for item in feedback_list %}
+            <div class="history-item sentiment-{{ item.label|lower }}">
+                <div class="history-header">
+                    <span>{{ item.emoji }} {{ item.label }}</span>
+                    <span class="timestamp">{{ item.timestamp }}</span>
+                </div>
+                <p class="history-text">{{ item.text }}</p>
+                <div class="keywords">
+                    {% for kw in item.keywords %}
+                        <span class="keyword-chip">{{ kw }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="empty-state">No feedback analyzed yet. <a href="{{ url_for('analyze') }}">Analyze your first feedback →</a></p>
+    {% endif %}
+</section>
+{% endblock %}

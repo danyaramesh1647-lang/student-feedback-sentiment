@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Analyze Feedback | Feedback Sentiment Analyzer{% endblock %}
+
+{% block content %}
+<section class="analyze-section">
+    <h1>Analyze Student Feedback</h1>
+
+    <form method="POST" action="{{ url_for('analyze') }}" class="feedback-form">
+        <textarea
+            name="feedback"
+            rows="5"
+            placeholder="e.g. The faculty explains the concepts very clearly and the classes are interesting."
+            required>{{ result.text if result else "" }}</textarea>
+        <button type="submit" class="btn-primary">Analyze Sentiment</button>
+    </form>
+
+    {% if result %}
+    <div class="result-card sentiment-{{ result.label|lower }}">
+        <h2>{{ result.emoji }} {{ result.label }} Sentiment</h2>
+
+        <div class="score-grid">
+            <div class="score-box">
+                <span class="score-label">Polarity Score</span>
+                <span class="score-value">{{ result.polarity }}</span>
+            </div>
+            <div class="score-box">
+                <span class="score-label">Subjectivity</span>
+                <span class="score-value">{{ result.subjectivity }}</span>
+            </div>
+        </div>
+
+        <div class="keywords">
+            <span class="score-label">Keywords:</span>
+            {% for kw in result.keywords %}
+                <span class="keyword-chip">{{ kw }}</span>
+            {% endfor %}
+        </div>
+
+        <p class="timestamp">Analyzed on {{ result.timestamp }}</p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

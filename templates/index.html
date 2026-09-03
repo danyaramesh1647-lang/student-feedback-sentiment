@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Feedback Sentiment Analyzer{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>🎓 Sentiment Analysis of Student Feedback</h1>
+    <p class="subtitle">
+        An NLP-powered web app that analyzes student feedback and classifies it as
+        <strong>Positive 😊</strong>, <strong>Neutral 😐</strong>, or <strong>Negative 😞</strong> —
+        helping institutions understand student sentiment at a glance.
+    </p>
+
+    <div class="how-it-works">
+        <h2>How it works</h2>
+        <ol>
+            <li>Enter or paste student feedback text</li>
+            <li>Click <strong>Analyze Sentiment</strong></li>
+            <li>Get instant sentiment classification with confidence score and keywords</li>
+        </ol>
+    </div>
+
+    <a href="{{ url_for('analyze') }}" class="btn-primary">Analyze Feedback →</a>
+</section>
+{% endblock %}
